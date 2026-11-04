@@ -1,0 +1,10 @@
+# dsh-worktree-tree bundle patch
+#
+# Adding this package to `dsh.profile.bundles` merges this layer: the inserted
+# loader row mounts the host half (the RPC data channel), and the client half
+# (`dsh.client`) is picked up by the Web client. The `disabled` guard skips the
+# row when another layer already mounted this package under a different id.
+- insert:
+    - id: worktree-tree
+      name: 'dsh-worktree-tree'
+      disabled: !!js "[...ctx.loader.entries()].some((e) => e.options.name === 'dsh-worktree-tree' && e.options.id !== 'worktree-tree' && !e.disabled)"
